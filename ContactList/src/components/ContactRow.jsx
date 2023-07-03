@@ -1,14 +1,35 @@
 import React from 'react';
-export default function ContactRow({ setSelectedContactId, contact }) {
+
+const ContactRowC = async (
+  { contact, setSelectedContactId }
+) => {
+  return (
+      (setSelectedContactId ? (
+      <>
+        {
+          <>
+            <td>{contact.name}</td>
+            <td>{contact.email}</td>
+            <td>{contact.phone}</td>
+          </>
+        }
+      </>
+      ) : (
+        <p>No Items to Select</p>
+      ))
+  );
+}
+
+function ContactRow({ setSelectedContactId, contact }) {
   return (
     <tr
       onClick={() => {
         setSelectedContactId(contact);
+        ContactRowC(contact, setSelectedContactId);
       }}
     >
-      <td>{contact.name}</td>
-      <td>{contact.email}</td>
-      <td>{contact.phone}</td>
     </tr>
   );
 }
+
+export default ContactRow
