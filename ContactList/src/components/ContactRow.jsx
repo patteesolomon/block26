@@ -1,35 +1,22 @@
 import React from 'react';
+// tr = table row 
+// th = table header
+// td = table col
+// thread thing goes under table
+// table beginning
+// tbody begins tr, td, etc
 
-const ContactRowC = async (
-  { contact, setSelectedContactId }
-) => {
+export default function ContactRow({contact, setSelectedContactId }) {
   return (
-      (setSelectedContactId ? (
-      <>
-        {
-          <>
-            <td>{contact.name}</td>
-            <td>{contact.email}</td>
-            <td>{contact.phone}</td>
-          </>
-        }
-      </>
-      ) : (
-        <p>No Items to Select</p>
-      ))
-  );
-}
-
-function ContactRow({ setSelectedContactId, contact }) {
-  return (
-    <tr
-      onClick={() => {
-        setSelectedContactId(contact);
-        ContactRowC(contact, setSelectedContactId);
+     <tr
+      onClick={function () {
+        console.log(contact);
+        setSelectedContactId(contact.id);
       }}
     >
+        <td>{contact.name}</td>
+        <td>{contact.email}</td>
+        <td>{contact.phone}</td>
     </tr>
   );
 }
-
-export default ContactRow

@@ -1,5 +1,5 @@
-import React, {useEffect, useState } from "react"; 
-import ContactRow from "./ContactRow";
+import React, { useState, useEffect } from 'react';
+import ContactRow from './ContactRow';
 
 const dummyContacts = [
   { id: 1, name: "R2-D2", phone: "222-222-2222", email: "r2d2@droids.com" },
@@ -8,24 +8,22 @@ const dummyContacts = [
 ];
 
 export default function ContactList({ setSelectedContactId }) { 
-    const [contact, setContact] = useState([]);
-    // EMPTY dependency array below: useEffect will only run once
-  
-    useEffect(() => {
-        async function fetchContacts() {
-            try {
-            // your fetch logic will go here
-              const response = await fetch("http://fsa-jsonplaceholder-69b5c48f1259.herokuapp.com/users/");
-              const result = await response.json();
-              setContact(result);
-              //setSelectedContactId(result);//
-              console.log(response);//
-            } catch (error) {
-              console.error(error);
-            }
-        }
-        fetchContacts()
-        }, []);
+const [contacts, setContacts] = useState([]);
+useEffect(() => {
+  async function fetchContacts() {
+    try {
+        const response = await fetch(`http://fsa-jsonplaceholder-69b5c48f1259.herokuapp.com/users/`);
+        const result = await response.json();
+        console.log(result);
+      setContacts(result);
+      
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  fetchContacts()
+}, []);
+console.log("Contacts: ", contacts);
   return ( 
         <table>
           <thead>
@@ -34,14 +32,17 @@ export default function ContactList({ setSelectedContactId }) {
             </tr>
           </thead>
           <tbody>
-            <tr id="table-row">
-                <td>Name</td>
-                <td>Email</td>
-                <td>Phone</td>
-              </tr>
-              {contact.map((contact) => (
-                  <ContactRow key={contact.id} contact={contact} />
-                ))}
+            <tr>
+              <td>Name</td>
+              <td>Email</td>
+              <td>Phone</td>
+            </tr>
+              {
+                contacts.map((contact) => {
+                  return <ContactRow key={contact.id}
+                    contact={contact} setSelectedContactId={setSelectedContactId} />
+                })
+             }
           </tbody>
         </table>
     ); 
